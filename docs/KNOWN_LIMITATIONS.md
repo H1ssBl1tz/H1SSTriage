@@ -1,0 +1,22 @@
+# Known Limitations
+
+- snapshot pontual perde processos/conexões já encerrados;
+- PID pode ser reutilizado; a correlação temporal reduz falsos vínculos, mas relações sem tempo suficiente ou com candidatos empatados permanecem `Unresolved`/`Ambiguous`;
+- rootkit, kernel/API/WMI tampering pode enganar os coletores;
+- assinatura válida não prova benignidade e path/nome não geram confiança automática;
+- não há reputação online, ASN, baseline corporativo ou allowlist de hashes/publishers embutida;
+- `HashKnown` requer expectativa externa autorizada; hash calculado isoladamente não prova trust;
+- metadata de executável de actions de scheduled task é tentado antes da decisão, mas pode falhar; a falha propaga `Partial` e mantém trust `Unknown`;
+- Event Logs podem estar ausentes, desabilitados, rotacionados ou inacessíveis;
+- DNS cache não tem associação confiável a processo;
+- hash seletivo evita custo, portanto nem todo arquivo recebe SHA-256;
+- em Quick, assinatura/versão podem ficar indisponíveis quando o host não oferece o provider ou a evidência não é necessária para a decisão;
+- o cache representa um snapshot por execução; mudança do arquivo durante a coleta ainda pode produzir diferenças temporais entre outras fontes do host;
+- CGNAT é classificado separadamente e não é presumido como LAN corporativa; não há contexto de topologia para inferir seu uso local;
+- WMI/IFEO/COM e outros mecanismos têm cobertura desigual; COM hijacking e DLL search order genéricos não são varridos;
+- coleta de outros perfis depende de hive/pasta acessível; hives offline não são montados;
+- Registry View explícita ainda não é selecionada em todos os acessos; processos 32-bit em Windows 64-bit podem observar visão diferente;
+- SDDL e failure actions de serviços não são coletados;
+- timeouts rígidos ainda não cobrem todas as consultas CIM;
+- firewall, sessions e shares estão adiados;
+- arquivos CSV podem perder hierarquia; use JSON para análise canônica.
